@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1 Job results:
+  //p List of jobs #{jobs}
+  
+  ol
+    for job in jobs
+      li #{job}
+    else
+      li sorry, no books!
