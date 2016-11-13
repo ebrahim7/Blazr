@@ -6,6 +6,10 @@ block content
   
   ol
     for job in jobs
-      li #{job}
+      h3 #{job.title}:
+      ul
+        -var index = 0
+        each val, key in job
+          li(id="item-#{index++}") #{key}: #{val}
     else
-      li sorry, no books!
+      li No results :(
