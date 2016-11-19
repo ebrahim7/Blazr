@@ -1,0 +1,6 @@
+How to Set Up and Run Backend Server
+1- Install Flask and requests. 
+2- Download "app.py"
+3- Run "app.py" 
+4- Once server is up you can make calls to it by typing into a browser (or making an http request via other software)  the following: "http://localhost:5000/" + endpoint
+5- Enjoy!
