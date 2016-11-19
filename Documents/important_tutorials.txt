@@ -1,0 +1,11 @@
+MongoDB:
+https://www.youtube.com/watch?v=-0X8mr6Q8Ew
+
+Angular tutorial:
+https://www.youtube.com/watch?v=i9MHigUZKEM
+
+Get/Post Using Angular:
+https://www.youtube.com/watch?v=L7xPwhwbcHE
+
+Angular 2 MEAN stack app tutorial:
+https://www.nathanhleung.com/article/2015/12/26/getting-started-with-the-mean-stack/ 
