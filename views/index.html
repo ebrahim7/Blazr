@@ -2,22 +2,34 @@
 <html>
 
 <head>
-<script type="text/javascript" src="jquery-1.8.3.js"></script>
-<script type="text/javascript" src="routes/fx2.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
 </head>
 
-<body>
-<form action='/jobs' METHOD='POST'>
-	<table cellspacing='0' style='font-family:arial'>
-	<tr><td style='font-size:16px;color:#FF6600'><b>Blazr Search</b></td><td> </td></tr>
-	<tr>
-	    <td><input name='searchterm' value='' size='25' y='2314'></td>
-	    <td><input type='submit' value='Find Jobs!'></td>
-	</tr>
-	<tr>
-	    <td colspan='1'  valign='top' style='font-size:10px;padding:0px;margin:0px;border:0px;width:116px;'>
-	</td>
-	</tr></table>
-</form>
+<body ng-app = "myapp">
+	<div ng-controller = "HelloController" >
+	   <h2>Welcome {{helloTo.title}} to the world of Tutorialspoint!</h2>
+	</div>
+	<form action='/jobs' METHOD='POST'>
+		<table cellspacing='0' style='font-family:arial'>
+		<tr><td style='font-size:16px;color:#FF6600'><b>Blazr Search</b></td><td> </td></tr>
+		<tr>
+			<td><input name='searchterm' value='' size='25' y='2314'></td>
+			<td><input type='submit' value='Find Jobs!'></td>
+		</tr>
+		<tr>
+			<td colspan='1'  valign='top' style='font-size:10px;padding:0px;margin:0px;border:0px;width:116px;'>
+		</td>
+		</tr></table>
+	</form>
+	
+	<script>
+	   angular.module("myapp", [])
+	   
+	   .controller("HelloController", function($scope) {
+		  $scope.helloTo = {};
+		  $scope.helloTo.title = "AngularJS";
+	   });
+	</script>
 </body>
 </html>

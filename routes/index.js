@@ -5,7 +5,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   //res.render('index', { title: 'Hi Maggie!' });
   //res.render('index', {title: 'C:\Users\Brian\Documents\2016_College_Junior\CS411-fx2' });
-	//res.sendFile('C:\Users\Brian\Documents\2016_College_Junior\CS411-fx2\index.html');
+  res.sendFile('index.html');
 });
 
 module.exports = router;
