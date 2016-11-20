@@ -5,7 +5,6 @@ var request = require("request");
 router.post ('/', function (req, res, next) {
 	
 	console.log('Search term: '+req.body.searchterm)
-	console.log('Search term; '+req.query.searchterm)
 
     var options = { method: 'GET',
         url: 'https://jobs.github.com/positions.json',
@@ -17,11 +16,11 @@ router.post ('/', function (req, res, next) {
 
     request(options, function (error, response, body) {
         if (error) throw new Error(error);
-
+		
         //console.log(body);
 
-        var searchterm = req.body.searchterm;
-		console.log(req);
+        //var searchterm = req.body.searchterm;
+		//console.log(req);
         //res.send({searchterm: searchterm, body: body});
 		
 		var json_body = JSON.parse(body)
@@ -34,9 +33,11 @@ router.post ('/', function (req, res, next) {
 			jobs_results = json_body[i]
 		}*/
 		
-		//res.send(titles);
-		res.render('jobs', { jobs: jobs_results }); //give jobs.jade all of the results
+		//res.render('jobs', { jobs: jobs_results }); //give jobs.jade all of the results
+		res.setHeader('Content-Type', 'application/json');
+		res.send(JSON.stringify(jobs_results, null, 2));
     });
+	
 });
 
 module.exports = router;

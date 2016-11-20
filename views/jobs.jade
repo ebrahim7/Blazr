@@ -10,6 +10,6 @@ block content
       ul
         -var index = 0
         each val, key in job
-          li(id="item-#{index++}") #{key}: #{val}
+          li(id="item-#{index++}") #{key}: !{val}
     else
       li No results :(

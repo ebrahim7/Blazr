@@ -9,3 +9,6 @@ https://www.youtube.com/watch?v=L7xPwhwbcHE
 
 Angular 2 MEAN stack app tutorial:
 https://www.nathanhleung.com/article/2015/12/26/getting-started-with-the-mean-stack/ 
+
+jQuery templating:
+http://stephenwalther.com/archive/2010/11/30/an-introduction-to-jquery-templates

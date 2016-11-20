@@ -10,6 +10,7 @@
 	<div ng-controller = "HelloController" >
 	   <h2>Welcome {{helloTo.title}} to the world of Tutorialspoint!</h2>
 	</div>
+	
 	<form action='/jobs' METHOD='POST'>
 		<table cellspacing='0' style='font-family:arial'>
 		<tr><td style='font-size:16px;color:#FF6600'><b>Blazr Search</b></td><td> </td></tr>
@@ -23,6 +24,15 @@
 		</tr></table>
 	</form>
 	
+	<form action="/jobs" id="searchForm" METHOD='POST'> <!-- maybe with forms you have to specify method here instead of in ajax, and with buttons you specify the method/type in the ajax call -->
+		<input type="text" name="searchterm" placeholder="Search jobs">
+		<input type="submit" value="Search">
+	</form>
+	<!-- the result of the search will be rendered inside this div -->
+	<div id="result">Data here</div>
+	<div class="resultContainer"></div>
+	
+	<!-- example angular controller inside html -->
 	<script>
 	   angular.module("myapp", [])
 	   
@@ -30,6 +40,65 @@
 		  $scope.helloTo = {};
 		  $scope.helloTo.title = "AngularJS";
 	   });
+	</script>
+	
+	<script>
+	// Attach a submit handler to the form
+	$("#searchForm").submit(function( event ) {
+		/*
+		// Stop form from submitting normally
+		event.preventDefault();
+
+		// Get some values from elements on the page:
+		var $form = $(this),
+		term = $form.find("input[name='s']").val(),
+		url = $form.attr("action");
+		
+		// Send the data using post
+		var posting = $.post(url,
+		{
+			searchterm: term
+		},
+		function(data,status){
+			console.log(data)
+			if (status == 'failure')
+				alert("Status: " + status);
+        });
+		
+		// Put the results in a div
+		posting.done(function(data) {
+			//var content = $(data).find("#content");
+			//$("#result").empty().append(content);
+			var content = $(data);
+			console.log(JSON.stringify(content))
+			$(".result").append(content);
+			console.log('after error');
+		});
+		*/
+		
+		// this uses the .ajax function
+		event.preventDefault();
+		
+		var $form = $(this);
+		term = $form.find("input[name='s']").val();
+		url = $form.attr("action");
+		$.ajax({
+            url: url,
+			method: 'POST', //commented out because apparently unneeded maybe due to form type being POST
+            data: $(this).serialize(),
+            dataType: 'json',
+            success: function(response) {
+				var content = $(response);
+				console.log(JSON.stringify(content, null, 2))
+				$("#result").text(JSON.stringify(content, null, 2));
+				$('.resultContainer').html('<p>It worked</p>');
+            },
+            error: function(){
+				$('.resultContainer').html('Oops we have a problem');
+            }
+        });
+		
+	});
 	</script>
 </body>
 </html>
