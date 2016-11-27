@@ -4,32 +4,24 @@
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+	<script>window.jQuery || document.write('<script src="{{
+		url_for('static', filename='jquery.js') }}">\x3C/script>')</script>
 </head>
-
+{% raw %}
 <body ng-app = "myapp">
 	<div ng-controller = "HelloController" >
-	   <h2>Welcome {{helloTo.title}} to the world of Tutorialspoint!</h2>
+		<!-- variables in angularJS are delimited by {{}} --> 
+		<h2>Welcome {{helloTo.title}} to the world of Tutorialspoint!</h2>
 	</div>
 	
-	<form action='/jobs' METHOD='POST'>
-		<table cellspacing='0' style='font-family:arial'>
-		<tr><td style='font-size:16px;color:#FF6600'><b>Blazr Search</b></td><td> </td></tr>
-		<tr>
-			<td><input name='searchterm' value='' size='25' y='2314'></td>
-			<td><input type='submit' value='Find Jobs!'></td>
-		</tr>
-		<tr>
-			<td colspan='1'  valign='top' style='font-size:10px;padding:0px;margin:0px;border:0px;width:116px;'>
-		</td>
-		</tr></table>
-	</form>
-	
+	<!-- form which does the search; calls ajax function on submit as defined later -->
 	<form action="/jobs" id="searchForm" METHOD='POST'> <!-- maybe with forms you have to specify method here instead of in ajax, and with buttons you specify the method/type in the ajax call -->
 		<input type="text" name="searchterm" placeholder="Search jobs">
 		<input type="submit" value="Search">
 	</form>
+	
 	<!-- the result of the search will be rendered inside this div -->
-	<div id="result">Data here</div>
+	<div id="result">Data will appear here</div>
 	<div class="resultContainer"></div>
 	
 	<!-- example angular controller inside html -->
@@ -84,14 +76,14 @@
 		url = $form.attr("action");
 		$.ajax({
             url: url,
-			method: 'POST', //commented out because apparently unneeded maybe due to form type being POST
+			method: 'POST', 
             data: $(this).serialize(),
             dataType: 'json',
             success: function(response) {
 				var content = $(response);
-				console.log(JSON.stringify(content, null, 2))
-				$("#result").text(JSON.stringify(content, null, 2));
-				$('.resultContainer').html('<p>It worked</p>');
+				var str = JSON.stringify(content, null, 2)
+				console.log(str)
+				$("#result").text(str);
             },
             error: function(){
 				$('.resultContainer').html('Oops we have a problem');
@@ -101,4 +93,5 @@
 	});
 	</script>
 </body>
+{% endraw %}
 </html>

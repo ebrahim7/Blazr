@@ -1,6 +1,15 @@
 How to Set Up and Run Backend Server
 1- Install Flask and requests. 
-2- Download "app.py"
-3- Run "app.py" 
+2- Open Blazr directory (should contain blazr.py)
+3- windows cmd: 
+	set FLASK_APP=blazr.py
+	flask run
+   (if on mac/linux)
+	export FLASK_APP=blazr.py
+	flask run
 4- Once server is up you can make calls to it by typing into a browser (or making an http request via other software)  the following: "http://localhost:5000/" + endpoint
-5- Enjoy!
+5- '/' route should render the index.html page in templates
+
+Notes:
+- remember to use spaces for indentation, not tabs
+- for not having conflicts between angularjs and jinja2 syntax, refer to: https://stackoverflow.com/questions/30362950/is-it-possible-to-use-angular-with-the-jinja2-template-engine
