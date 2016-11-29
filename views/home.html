@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Blazr - Home</title>
+
+    <link href="https://s3.amazonaws.com/codecademy-content/projects/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:500,300,700,400" rel="stylesheet" type="text/css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+  </head>
+  
+  <body>
+    <div class="main" ng-controller="MainController" ng-app="myApp">
+
+
+
+      <div class="top-bar">
+        <div class="left"></div><div class="mid"></div><div class="right">
+          <span>BLAZR</span>
+        </div>
+      </div>
+
+      <style>
+        .box {
+          height:200px;
+          width:200px;
+        }
+
+        .top-bar {
+          background-color: orange;
+        }
+
+        .top-bar div {
+          display: inline-block;
+          width: 33.33%;
+        }
+
+        .right {
+          text-align: right;
+        }
+      </style>
+
+        <p>{{ title }}</p>
+        <input type="search" placeholder="filter jobs" />
+        <br />
+
+        <div class ="box" ng-repeat="job in jobs">
+          <div class="job" style="text-align:center"><strong>{{job.title}}</strong> <br />at
+          <br />{{job.company}} </div>
+          <span class="glyphicon glyphicon-remove" style="color:red"></span>
+          <span class="glyphicon glyphicon-ok" style="color:green"></span>
+
+        </div>
+    </div>
+
+
+
+    <style>
+      .box {
+        height:200px;
+        width:200px
+      }
+    </style>
+
+    <!-- Modules -->
+    <script type="text/javascript" src="/scripts/modules/app.js"></script>
+
+    <!-- Controllers -->
+    <script type="text/javascript" src="/scripts/controllers/MainController.js"></script>
+
+  </body>
+</html>

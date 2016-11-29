@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+</head>
+
+<body ng-app = "myapp">
+	<div ng-controller = "HelloController" >
+		<!-- variables in angularJS are delimited by {{}} --> 
+		<h2>Welcome {{helloTo.title}} to the world of Tutorialspoint!</h2>
+	</div>
+	
+	<!-- form which does the search; calls ajax function on submit as defined later -->
+	<form action="/jobs" id="searchForm" METHOD='POST'> <!-- maybe with forms you have to specify method here instead of in ajax, and with buttons you specify the method/type in the ajax call -->
+		<input type="text" name="searchterm" placeholder="Search jobs">
+		<input type="submit" value="Search">
+	</form>
+	
+	<!-- the result of the search will be rendered inside this div -->
+	<div id="result">Data will appear here</div>
+	<div class="resultContainer"></div>
+	
+	<!-- example angular controller inside html -->
+	<script>
+	   angular.module("myapp", [])
+	   
+	   .controller("HelloController", function($scope) {
+		  $scope.helloTo = {};
+		  $scope.helloTo.title = "AngularJS";
+	   });
+	</script>
+	
+	<script>
+		// Attach a submit handler to the form
+		$("#searchForm").submit(function( event ) {
+			/*
+			// Stop form from submitting normally
+			event.preventDefault();
+
+			// Get some values from elements on the page:
+			var $form = $(this),
+			term = $form.find("input[name='s']").val(),
+			url = $form.attr("action");
+			
+			// Send the data using post
+			var posting = $.post(url,
+			{
+				searchterm: term
+			},
+			function(data,status){
+				console.log(data)
+				if (status == 'failure')
+					alert("Status: " + status);
+			});
+			
+			// Put the results in a div
+			posting.done(function(data) {
+				//var content = $(data).find("#content");
+				//$("#result").empty().append(content);
+				var content = $(data);
+				console.log(JSON.stringify(content))
+				$(".result").append(content);
+				console.log('after error');
+			});
+			*/
+			
+			// this uses the .ajax function
+			event.preventDefault();
+			
+			var $form = $(this);
+			term = $form.find("input[name='s']").val();
+			url = $form.attr("action");
+			$.ajax({
+				url: url,
+				method: 'POST', 
+				data: $(this).serialize(),
+				dataType: 'json',
+				success: function(response) {
+					var content = $(response);
+					var str = JSON.stringify(content, null, 2)
+					console.log(str)
+					$("#result").text(str);
+				},
+				error: function(){
+					$('.resultContainer').html('Oops we have a problem');
+				}
+			});
+			
+		});
+	</script>
+</body>
+
+</html>
