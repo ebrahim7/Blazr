@@ -10,13 +10,17 @@ jobs_url = "https://jobs.github.com/positions.json"
 def send_js(path):
     return send_from_directory('scripts', path)
 
+@app.route('/public/<path:path>')
+def send_public(path):
+    return send_from_directory('public', path)
+    
 @app.route('/')
 def root():
-	return send_from_directory('views','index.html') #send_from_directory is safer
+    return send_from_directory('views','index.html') #send_from_directory is safer
 
 @app.route('/home')
 def home():
-	return send_from_directory('views','home.html')
+    return send_from_directory('views','home.html')
 	
 @app.route('/jobs', methods=['POST'])
 def jobs():
