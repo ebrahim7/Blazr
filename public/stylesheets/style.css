@@ -65,4 +65,15 @@ body {
 .box span {
   font-size: 36px;
   border: 1px solid black;
+  cursor: pointer;
+}
+
+.job span {
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.description-container {
+  border: 10px solid blue;
+  display: none;
 }

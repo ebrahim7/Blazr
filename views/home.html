@@ -6,7 +6,7 @@
   <link href="https://s3.amazonaws.com/codecademy-content/projects/bootstrap.min.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css?family=Roboto:500,300,700,400" rel="stylesheet" type="text/css">
   <link rel="stylesheet" type="text/css" href="/public/stylesheets/style.css">
-  
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
 
@@ -33,23 +33,39 @@
 
   <p>{{ title }}</p>
   <!-- form which does the search; calls ajax function on submit as defined later -->
-  <form action="/jobs" id="searchForm" METHOD='POST'> 
+  <form action="/jobs" id="searchForm" method="POST">
     <input type="text" name="searchterm" placeholder="Search jobs" />
     <input type="submit" value="Search"/>
   </form>
   <br />
 
   <div class ="box" ng-repeat="job in jobs track by $index">
+  <script>
+    var index = {{$index}}
+    console.log(index);
+  </script>
     <div class="job">
-      <strong>{{job.title}}</strong> 
+      <strong>{{job.title}}</strong>
       <br />at
       <br />{{job.company}}
-      <br />{{job.description}}
       <br />{{job.location}}
+      <span class="glyphicon glyphicon-plus" style="color:blue" id="plus"></span>
+      <div class="description-container" id="job-{{$index}}">
+        <br />{{job.description}}
+      </div>
+      <script>
+      console.log("hi");
+      $("#plus").click(function(){
+        console.log("hello");
+        $("#job-{{$index}}").toggle();
+      });
+      </script>
     </div>
     <span class="glyphicon glyphicon-remove" style="color:red"></span>
     <span class="glyphicon glyphicon-ok" style="color:green"></span>
 
+
+  </div>
   </div>
   </div>
 
@@ -63,49 +79,53 @@
       document.getElementById("mySidenav").style.width = "0";
       document.getElementById("main").style.marginLeft= "0";
   }
-  </script>
-  
-  </div>
-  
-  <script>
+
+  //$(document).ready(function(){
+
+  //});
+
 		// Attach a submit handler to the form
 		$("#searchForm").submit(function( event ) {
 			// this uses the .ajax function
 			event.preventDefault();
-			
+
 			var $form = $(this);
 			term = $form.find("input[name='searchterm']").val();
 			url = $form.attr("action");
 			if (term != ''){ //may want to replace this with regex to handle empty queries
 				$.ajax({
 					url: url,
-					method: 'POST', 
+					method: 'POST',
 					data: $(this).serialize(),
 					dataType: 'json',
 					success: function(response) {
 						var content = $(response);
 						var str = JSON.stringify(content, null, 2)
 						console.log(content)
-						
+
 						var appElement = document.querySelector('[ng-app=myApp]');
 						var $scope = angular.element(appElement).scope();
 						$scope.$apply(function() {
 							$scope.jobs = content;
 						});
+
+
 					},
 					error: function(){
 						$('.resultContainer').html('Oops we have a problem');
 					}
 				});
 			}
-			
+
 		});
 	</script>
-  
+
   <!-- Modules -->
-  <script type="text/javascript" src="/scripts/modules/app.js"></script> 
+  <script type="text/javascript" src="/scripts/modules/app.js">
+  </script>
 
   <!-- Controllers -->
-  <script type="text/javascript" src="/scripts/controllers/MainController.js"></script>
+  <script type="text/javascript" src="/scripts/controllers/MainController.js">
+  </script>
 </body>
 </html>
