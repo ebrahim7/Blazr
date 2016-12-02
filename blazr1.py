@@ -47,7 +47,7 @@ def route_login_route():
 
 @app.route('/get_jobs', methods=['POST'])
 def get_jobs_route():
-    return get_jobs(request.form['searchterm'])
+    return get_jobs(jobs_url,request.form['searchterm'])
 
 
 

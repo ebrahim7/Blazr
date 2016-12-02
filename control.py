@@ -1,5 +1,5 @@
 from json import load, dumps
-
+import requests
 
 def login(data):
 	uname = data['uname']
@@ -13,7 +13,7 @@ def create_account(data):
 	key = data['key']
 	return 'created'
 
-def get_jobs(term):
+def get_jobs(jobs_url,term):
     response = requests.get(jobs_url, params={'description': term})
     return response.text
 

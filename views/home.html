@@ -15,58 +15,64 @@
 <body>
   <div class="main" ng-controller="MainController" ng-app="myApp">
 
-  <div id="mySidenav" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="#">About</a>
-    <a href="#">Services</a>
-    <a href="#">Clients</a>
-    <a href="#">Contact</a>
-  </div>
-
-  <div id="main">
-    <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
-    <img src="/public/images/blazr_orange_text.png" style="float: right;">
-    <h2>Look for Jobs</h2>
-    <p>Look through our vast list of jobs one by one. Click the check mark to save the job to your list of jobs or click the 'x' to ignore it. You can also narrow down your search by typing a keyword into the box below.</p>
-
-
-
-  <p>{{ title }}</p>
-  <!-- form which does the search; calls ajax function on submit as defined later -->
-  <form action="/jobs" id="searchForm" method="POST">
-    <input type="text" name="searchterm" placeholder="Search jobs" />
-    <input type="submit" value="Search"/>
-  </form>
-  <br />
-
-  <div class ="box" ng-repeat="job in jobs track by $index">
-  <script>
-    var index = {{$index}}
-    console.log(index);
-  </script>
-    <div class="job">
-      <strong>{{job.title}}</strong>
-      <br />at
-      <br />{{job.company}}
-      <br />{{job.location}}
-      <span class="glyphicon glyphicon-plus" style="color:blue" id="plus"></span>
-      <div class="description-container" id="job-{{$index}}">
-        <br />{{job.description}}
-      </div>
-      <script>
-      console.log("hi");
-      $("#plus").click(function(){
-        console.log("hello");
-        $("#job-{{$index}}").toggle();
-      });
-      </script>
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="#">About</a>
+      <a href="#">Services</a>
+      <a href="#">Clients</a>
+      <a href="#">Contact</a>
     </div>
-    <span class="glyphicon glyphicon-remove" style="color:red"></span>
-    <span class="glyphicon glyphicon-ok" style="color:green"></span>
+
+    <div id="main">
+      <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+      <img src="/public/images/blazr_orange_text.png" style="float: right;">
+      <h2>Look for Jobs</h2>
+      <p>Look through our vast list of jobs one by one. Click the check mark to save the job to your list of jobs or click the 'x' to ignore it. You can also narrow down your search by typing a keyword into the box below.</p>
+
+      <p>{{ title }}</p>
+      <!-- form which does the search; calls ajax function on submit as defined later -->
+      <form action="/get_jobs" id="searchForm" method="POST">
+        <input type="text" name="searchterm" placeholder="Search jobs" />
+        <input type="submit" value="Search"/>
+      </form>
+      <br />
+      
+      
+      <div class ="box" ng-repeat="job in jobs track by $index">
+        <!--<script>
+          var index = $index
+          console.log(index);
+        </script>-->
+        <script>
+          //var appElement = document.querySelector('[ng-app=myApp]');
+          //var $scope = angular.element(appElement).scope();
+        </script>
+        <div class="job">
+          <strong>{{job.title}}</strong>
+          <br />at
+          <br />{{job.company}}
+          <br />{{job.location}}
+          <span class="glyphicon glyphicon-plus" style="color:blue" id="plus" ng-click="jobDescToggle($index)"></span>
+          <div class="description-container" id="job" ng-show="toggle[$index]" ng-bind-html="job.description | trust">
+            <br />{{job.description}}
+          </div>
+          <script>
+            console.log("box created");
+            /*
+            $("#plus").click(function(){
+              console.log("hello");
+              $("#job-$index").toggle();
+            });
+            */
+            
+          </script>
+        </div>
+        <span class="glyphicon glyphicon-remove" style="color:red"></span>
+        <span class="glyphicon glyphicon-ok" style="color:green"></span>
 
 
-  </div>
-  </div>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -92,6 +98,7 @@
 			var $form = $(this);
 			term = $form.find("input[name='searchterm']").val();
 			url = $form.attr("action");
+      console.log(term)
 			if (term != ''){ //may want to replace this with regex to handle empty queries
 				$.ajax({
 					url: url,
@@ -108,8 +115,6 @@
 						$scope.$apply(function() {
 							$scope.jobs = content;
 						});
-
-
 					},
 					error: function(){
 						$('.resultContainer').html('Oops we have a problem');
@@ -122,6 +127,7 @@
 
   <!-- Modules -->
   <script type="text/javascript" src="/scripts/modules/app.js">
+    console.log('wtf')
   </script>
 
   <!-- Controllers -->
