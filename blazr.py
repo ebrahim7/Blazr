@@ -71,10 +71,9 @@ def profile():
 def home_route():
   return send_from_directory('views','home.html') #send_from_directory is safer
 
-@app.route('/edit_profile')
-def edit_profile_route():
-  #return send_from_directory('views','home.html')
-  return ''
+@app_route("/myprofile")
+def myporfile_route():
+	return send_from_directory('views','myprofile.html')
 
 @app.route('/about')
 def about_route():
