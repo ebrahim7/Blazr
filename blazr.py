@@ -62,18 +62,14 @@ def load_user(id):
 def index():
   return render_template('index.html') 
 
-@app.route('/profile')
-@login_required
-def profile():
-  return render_template('profile.html')
-    
 @app.route('/home')
 def home_route():
   return send_from_directory('views','home.html') #send_from_directory is safer
 
-@app_route("/myprofile")
-def myporfile_route():
-	return send_from_directory('views','myprofile.html')
+@app.route("/myprofile")
+@login_required
+def myprofile_route():
+	return render_template('profile.html')
 
 @app.route('/about')
 def about_route():
@@ -120,7 +116,7 @@ def oauth_callback(provider):
   #if not is_safe_url(next):
   #    return abort(400)
   
-  return redirect(url_for('profile'))
+  return redirect(url_for('myprofile'))
     
 @app.route('/get_jobs', methods=['POST'])
 def get_jobs_route():
