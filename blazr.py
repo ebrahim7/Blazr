@@ -69,7 +69,7 @@ def home_route():
 @app.route("/myprofile")
 @login_required
 def myprofile_route():
-	return render_template('profile.html')
+	return render_template('myprofile.html')
 
 @app.route('/about')
 def about_route():
