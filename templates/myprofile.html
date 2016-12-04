@@ -27,12 +27,12 @@
       <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
       <img src="/public/images/blazr_orange_text.png" style="float: right;">
       
-      <h2> My Profile </h2>
-
+      <h2> My Profile - %% current_user.nickname %%</h2>
+        <p><a href="%% url_for('logout') %%">Logout</a></p>
       
       <h3> Summary </h3>
 
-      	<p> Here's my bio yo! If you are reading this then you are the coolio-est </p>
+      	<p> %% current_user.summary %% </p>
 
       <h3> Experience </h3>
 
@@ -46,8 +46,12 @@
       
       <h3> Skills </h3>
 
-      		<p> PHP, Java, Gettin' Krungkx, Makin moneys </p>
-      
+      		<p> %% current_user.skills %% </p>
+          
+      <h3> Contact Info </h3>
+        <h4> Email </h4>
+          <p> %% current_user.emailaddress %% </p>
+        
     </div>
   </div>
 
