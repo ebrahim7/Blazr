@@ -25,12 +25,19 @@
 
     <div id="main">
       <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
-      <img src="/public/images/blazr_orange_text.png" style="float: right;">
-      
-      <h2> About Us </h2>
+      <img onclick="play()" src="/public/images/blazr.png" style="float: right; height:55px; width:125px;">
+      <audio id="audio" src="public/audio.wav"></audio>
+      <script>
+        function play() {
+          var audio = document.getElementById("audio");
+          audio.play();
+        }
+      </script>
 
-      <p> blazr was founded in 2016 to streamline the tedious job hunt process. Our goal is to provide user with an easy-access and inviting interface to connect with employers.</p> 
-      
+      <h2>About Us</h2>
+
+      <p>Blazr was founded in 2016 to streamline the tedious job hunt process. Our goal is to provide users with an easy-access and inviting interface to connect with employers. Here at Blazr, we believe in simplicity and quickness when searching for jobs. Perry is my spirit animal. That is why we are so passionate about delivering the best experience to our beloved users. We thank you for trying our app. It couldn't have been done without the users as well.</p>
+
     </div>
   </div>
 

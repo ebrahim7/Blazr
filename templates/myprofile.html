@@ -25,7 +25,7 @@
 
     <div class="user-profile" id="main">
       <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
-      <img src="/public/images/blazr_orange_text.png" style="float: right;">
+      <img src="/public/images/blazr.png" style="float: right; height:55px; width:125px;">
 
       <h2>My Profile - %% current_user.nickname %%</h2>
         <p><a href="%% url_for('logout') %%">Logout</a></p>
@@ -38,7 +38,7 @@
       <h3>Summary</h3>
 
       	<span> %% current_user.summary %% </span>
-        
+
         <form action="/edit_user_info" class="editUserInfo" id="summary" method="POST">
           <input type="text" name="entry" placeholder="%% current_user.summary %%"/>
           <br/>
@@ -108,23 +108,23 @@
   //$(document).ready(function(){
   //});
 		// Attach a submit handler to the form
-    
+
 		$(".editUserInfo").submit(function( event ) {
 			// this uses the .ajax function
 			event.preventDefault();
-			
+
       var $form = $(this);
 			entry = $form.find("input[name='entry']").val();
       //entry = summary;
       entry_name = $form.attr("id"); //the type of entry being submitted
 			url = $form.attr("action");
-      
+
       data = { entry_name: entry_name, entry : entry}
       console.log(data)
-      
+
 			if (entry != ''){ //may want to replace this with regex to handle empty queries
 				/*
-        $.post(url, { entry_name: entry_name, entry : entry}, 
+        $.post(url, { entry_name: entry_name, entry : entry},
             function(returnedData){
                  console.log(returnedData);
         }).fail(function(){

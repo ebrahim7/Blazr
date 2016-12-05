@@ -26,7 +26,7 @@
 
     <div id="main">
         <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
-        <img src="/public/images/blazr_orange_text.png" style="float: right;">
+        <img src="/public/images/blazr.png" style="float: right; height:55px; width:125px;">
       <h2>Look for Jobs</h2>
       <p>Look through our vast list of jobs one by one. Click the check mark to save the job to your list of jobs or click the 'x' to ignore it. Also, you can expand a job by clicking the dropdown icon to read more.</p>
 
@@ -76,7 +76,7 @@
         </div>
         <div class="bottom-bar">
           <span ng-click="removeJob($index)" class="glyphicon glyphicon-remove" style="margin-left: 28%;"></span>
-          <span class="glyphicon glyphicon-ok" style="float: right; margin-right: 28%;"></span>
+          <a href="{{job.url}}"><span class="glyphicon glyphicon-ok" style="float: right; margin-right: 28%;"></span></a>
         </div>
 
       </div>
