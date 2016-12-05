@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Blazr - Login</title>
+
+  <link href="https://s3.amazonaws.com/codecademy-content/projects/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:500,300,700,400" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="/public/stylesheets/style.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+
+</head>
+
+<body>
+  <div class="main" ng-controller="MainController" ng-app="myApp">
+
+    <div class="user-profile" id="main">
+      <img src="/public/images/blazr_orange_text.png" style="float: right;">
+
+        <div class="box" style="padding: 20px 0px 20px 0px; text-align:center; width:50%; margin:auto; margin-top:100px;">
+          <div style="text-align:center;">
+            <span class="message" style="cursor: default; color:black; display:block; font-size:14px; padding: 10px 0px 5px 0px;">Welcome to Blazr! Please log in with your LinkedIn information:</span>
+            <input type="submit" value="Log in with LinkedIn" style="margin: 5px 0px 10px 0px;">
+          </div>
+        </div>
+    </div>
+
+  </div>
+
+  <script>
+  function openNav() {
+      document.getElementById("mySidenav").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "250px";
+  }
+  function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+      document.getElementById("main").style.marginLeft= "0";
+  }
+  //$(document).ready(function(){
+  //});
+		// Attach a submit handler to the form
+		$("#searchForm").submit(function( event ) {
+			// this uses the .ajax function
+			event.preventDefault();
+			var $form = $(this);
+			term = $form.find("input[name='searchterm']").val();
+			url = $form.attr("action");
+      console.log(term)
+			if (term != ''){ //may want to replace this with regex to handle empty queries
+				$.ajax({
+					url: url,
+					method: 'POST',
+					data: $(this).serialize(),
+					dataType: 'json',
+					success: function(response) {
+						var content = $(response);
+						var str = JSON.stringify(content, null, 2)
+						console.log(content)
+						var appElement = document.querySelector('[ng-app=myApp]');
+						var $scope = angular.element(appElement).scope();
+						$scope.$apply(function() {
+							$scope.jobs = content;
+						});
+					},
+					error: function(){
+						$('.resultContainer').html('Oops we have a problem');
+					}
+				});
+			}
+		});
+	</script>
+
+  <!-- Modules -->
+  <script type="text/javascript" src="/scripts/modules/app.js">
+    console.log('wtf')
+  </script>
+
+  <!-- Controllers -->
+  <script type="text/javascript" src="/scripts/controllers/MainController.js">
+  </script>
+</body>
+</html>

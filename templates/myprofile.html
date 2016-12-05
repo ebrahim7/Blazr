@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Blazr - Home</title>
+  <title>Blazr - My Profile</title>
 
   <link href="https://s3.amazonaws.com/codecademy-content/projects/bootstrap.min.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css?family=Roboto:500,300,700,400" rel="stylesheet" type="text/css">
@@ -17,42 +17,67 @@
 
     <div id="mySidenav" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="home">Search Jobs</a>
       <a href="#">About</a>
-      <a href="#">Services</a>
-      <a href="#">Clients</a>
+      <a href="myprofile">My Profile</a>
       <a href="#">Contact</a>
     </div>
 
-    <div id="main">
+    <div class="user-profile" id="main">
       <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
       <img src="/public/images/blazr_orange_text.png" style="float: right;">
-      
-      <h2> My Profile - %% current_user.nickname %%</h2>
+
+      <h2>My Profile - %% current_user.nickname %%</h2>
         <p><a href="%% url_for('logout') %%">Logout</a></p>
-      
-      <h3> Summary </h3>
 
-      	<p> %% current_user.summary %% </p>
+      <h3>Photo</h3>
+        <img src="%% current_user.photo %%">
+        <!--Upload photo option-->
+        <span class="glyphicon glyphicon-pencil edit"></span>
 
-      <h3> Experience </h3>
+      <h3>Summary</h3>
 
-      	<h4> Job Name 1 </h4>
+      	<span> %% current_user.summary %% </span>
+        <textarea rows="6" cols="60" name="summary" value="%% current_user.summary %%"></textarea>
+        <input type="submit" value="Apply"/>
+        <input type="submit" value="Cancel"/>
+        <span class="glyphicon glyphicon-pencil edit"></span>
 
-      		<p> I've worked at all the big wig co's and all that snazy nazy stuffs yo. I'm just trying to fill up space blah blah </p>
+      <h3>Experience</h3>
 
-      	<h4> Job Name 2 </h4>
+        <span> %% current_user.experience %% </span>
+        <textarea rows="6" cols="60" name="experience" value="%% current_user.experience %%"></textarea>
+        <input type="submit" value="Apply"/>
+        <input type="submit" value="Cancel"/>
+        <span class="glyphicon glyphicon-pencil edit"></span>
 
-      		<p> I've ALSO worked at all the big wig co's and all that snazy nazy stuffs yo. I'm just trying to fill up space blah blah </p>
-      
-      <h3> Skills </h3>
+      <h3>Skills</h3>
 
-      		<p> %% current_user.skills %% </p>
-          
-      <h3> Contact Info </h3>
-        <h4> Email </h4>
-          <p> %% current_user.emailaddress %% </p>
-        
+      	<span> %% current_user.skills %% </span>
+        <textarea rows="6" cols="60" name="skills" value="%% current_user.skills %%"></textarea>
+        <input type="submit" value="Apply"/>
+        <input type="submit" value="Cancel"/>
+        <span class="glyphicon glyphicon-pencil edit"></span>
+
+
+      <h3>Contact Info</h3>
+        <h4>Email</h4>
+          <span> %% current_user.emailaddress %% </span>
+          <input type="text" name="skill" value="%% current_user.emailaddress %%"/>
+          <input type="submit" value="Apply"/>
+          <input type="submit" value="Cancel"/>
+          <span class="glyphicon glyphicon-pencil edit"></span>
+
+        <h4>Phone</h4>
+          <span> %% current_user.phone %% </span>
+          <input type="text" name="phone" value="%% current_user.phone %%"/>
+          <input type="submit" value="Apply"/>
+          <input type="submit" value="Cancel"/>
+          <span class="glyphicon glyphicon-pencil edit"></span>
+
+
     </div>
+
   </div>
 
   <script>
