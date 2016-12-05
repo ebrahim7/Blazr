@@ -42,6 +42,7 @@ if not engine.dialect.has_table(engine, 'users'):  # If table don't exist, Creat
         Column('nickname', String, nullable=False),
         Column('headline', String),
         Column('summary', String),
+        Column('experience', String),
         Column('skills', String),
         Column('phone', String),
         Column('emailaddress', String, nullable=False))
@@ -56,6 +57,7 @@ class User(UserMixin, db.Model):
   nickname = db.Column(db.String(64), nullable=False)
   headline = db.Column(db.String(64), nullable=True)
   summary = db.Column(db.String(64), nullable=True)
+  experience = db.Column(db.String(64), nullable=True)
   skills = db.Column(db.String(64), nullable=True)
   phone = db.Column(db.String(64), nullable=True)
   emailaddress = db.Column(db.String(64), nullable=False)
@@ -164,6 +166,9 @@ def app_edit_entry(entry_name, entry):
     db.session.commit()
   elif entry_name == 'summary':
     current_user.summary = entry
+    db.session.commit()
+  elif entry_name == 'experience':
+    current_user.experience = entry
     db.session.commit()
   elif entry_name == 'skills':
     current_user.skills = entry

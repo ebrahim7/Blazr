@@ -37,38 +37,6 @@
       document.getElementById("mySidenav").style.width = "0";
       document.getElementById("main").style.marginLeft= "0";
   }
-  //$(document).ready(function(){
-  //});
-		// Attach a submit handler to the form
-		$("#searchForm").submit(function( event ) {
-			// this uses the .ajax function
-			event.preventDefault();
-			var $form = $(this);
-			term = $form.find("input[name='searchterm']").val();
-			url = $form.attr("action");
-      console.log(term)
-			if (term != ''){ //may want to replace this with regex to handle empty queries
-				$.ajax({
-					url: url,
-					method: 'POST',
-					data: $(this).serialize(),
-					dataType: 'json',
-					success: function(response) {
-						var content = $(response);
-						var str = JSON.stringify(content, null, 2)
-						console.log(content)
-						var appElement = document.querySelector('[ng-app=myApp]');
-						var $scope = angular.element(appElement).scope();
-						$scope.$apply(function() {
-							$scope.jobs = content;
-						});
-					},
-					error: function(){
-						$('.resultContainer').html('Oops we have a problem');
-					}
-				});
-			}
-		});
 	</script>
 
   <!-- Modules -->
