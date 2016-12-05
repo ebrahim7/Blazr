@@ -21,7 +21,9 @@
         <div class="box" style="padding: 20px 0px 20px 0px; text-align:center; width:50%; margin:auto; margin-top:100px;">
           <div style="text-align:center;">
             <span class="message" style="cursor: default; color:black; display:block; font-size:14px; padding: 10px 0px 5px 0px;">Welcome to Blazr! Please log in with your LinkedIn information:</span>
-            <input type="submit" value="Log in with LinkedIn" style="margin: 5px 0px 10px 0px;">
+            <a href="%% url_for('oauth_authorize', provider='linkedin') %%">
+              <input type="submit" value="Log in with LinkedIn" style="margin: 5px 0px 10px 0px;">
+            </a>
           </div>
         </div>
     </div>

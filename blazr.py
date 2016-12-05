@@ -38,7 +38,7 @@ if not engine.dialect.has_table(engine, 'users'):  # If table don't exist, Creat
   Table('users', metadata,
         Column('id', Integer, primary_key=True, nullable=False),
         Column('social_id', String, nullable=False),  
-        Column('picture-url', String),
+        Column('picture_url', String),
         Column('nickname', String, nullable=False),
         Column('headline', String),
         Column('summary', String),
@@ -53,7 +53,7 @@ class User(UserMixin, db.Model):
   __tablename__ = 'users'
   id = db.Column(db.Integer, primary_key=True)
   social_id = db.Column(db.String(64), nullable=False, unique=True)
-  picture-url = db.Column(db.String(64), nullable=True)
+  picture_url = db.Column(db.String(64), nullable=True)
   nickname = db.Column(db.String(64), nullable=False)
   headline = db.Column(db.String(64), nullable=True)
   summary = db.Column(db.String(64), nullable=True)
@@ -81,7 +81,10 @@ app.jinja_options = jinja_options
 
 @app.route('/')
 def index():
-  return render_template('index.html') 
+  if current_user.is_anonymous:
+    return redirect(url_for('login_page_route'))
+  else:
+    return redirect(url_for('home_route')) 
 
 @app.route('/home')
 def home_route():
@@ -121,14 +124,15 @@ def oauth_callback(provider):
   if not current_user.is_anonymous:
     return redirect(url_for('index'))
   oauth = OAuthSignIn.get_provider(provider)
-  social_id, username, headline, picture-url, emailaddress = oauth.callback()
+  social_id, username, headline, picture_url, emailaddress = oauth.callback()
   
   if social_id is None:
     flash('Authentication failed.')
     return redirect(url_for('index'))
   user = User.query.filter_by(social_id=social_id).first()
+  
   if not user:
-    user = User(social_id=social_id, nickname=username, headline=headline, picture-url=picture-url, emailaddress=emailaddress)
+    user = User(social_id=social_id, nickname=username, headline=headline, picture_url=picture_url, emailaddress=emailaddress)
     db.session.add(user)
     db.session.commit()
   

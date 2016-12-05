@@ -92,6 +92,6 @@ class LinkedInSignIn(OAuthSignIn):
       'linkedin$' + me['id'],
       me.get('firstName') + ' ' + me.get('lastName'),
       me.get('headline'),
-      me.get('picture-url'),
+      me.get('pictureUrl'),
       me.get('emailAddress')
     )

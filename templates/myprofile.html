@@ -31,49 +31,65 @@
         <p><a href="%% url_for('logout') %%">Logout</a></p>
 
       <h3>Photo</h3>
-        <img src="%% current_user.picture-url %%">
+        <img src="%% current_user.picture_url %%">
         <!--Upload photo option-->
         <span class="glyphicon glyphicon-pencil edit"></span>
 
       <h3>Summary</h3>
 
       	<span> %% current_user.summary %% </span>
-        <textarea rows="6" cols="60" name="summary" value="%% current_user.summary %%"></textarea>
-        <input type="submit" value="Apply"/>
-        <input type="submit" value="Cancel"/>
-        <span class="glyphicon glyphicon-pencil edit"></span>
+        
+        <form action="/edit_user_info" class="editUserInfo" id="summary" method="POST">
+          <input type="text" name="entry" placeholder="%% current_user.summary %%"/>
+          <br/>
+          <input type="submit" value="Apply"/>
+          <span class="glyphicon glyphicon-remove edit"></span>
+          <span class="glyphicon glyphicon-pencil edit"></span>
+        </form>
 
       <h3>Experience</h3>
 
         <span> %% current_user.experience %% </span>
-        <textarea rows="6" cols="60" name="experience" value="%% current_user.experience %%"></textarea>
-        <input type="submit" value="Apply"/>
-        <input type="submit" value="Cancel"/>
-        <span class="glyphicon glyphicon-pencil edit"></span>
+        <form action="/edit_user_info" class="editUserInfo" id="experience" method="POST">
+          <input type="text" name="entry" placeholder="%% current_user.experience %%"/>
+          <br/>
+          <input type="submit" value="Apply"/>
+          <span class="glyphicon glyphicon-remove edit"></span>
+          <span class="glyphicon glyphicon-pencil edit"></span>
+        </form>
 
       <h3>Skills</h3>
 
       	<span> %% current_user.skills %% </span>
-        <textarea rows="6" cols="60" name="skills" value="%% current_user.skills %%"></textarea>
-        <input type="submit" value="Apply"/>
-        <input type="submit" value="Cancel"/>
-        <span class="glyphicon glyphicon-pencil edit"></span>
+        <form action="/edit_user_info" class="editUserInfo" id="skills" method="POST">
+          <input type="text" name="entry" placeholder="%% current_user.skills %%"/>
+          <br/>
+          <input type="submit" value="Apply"/>
+          <span class="glyphicon glyphicon-remove edit"></span>
+          <span class="glyphicon glyphicon-pencil edit"></span>
+        </form>
 
 
       <h3>Contact Info</h3>
         <h4>Email</h4>
           <span> %% current_user.emailaddress %% </span>
-          <input type="text" name="skill" value="%% current_user.emailaddress %%"/>
-          <input type="submit" value="Apply"/>
-          <input type="submit" value="Cancel"/>
-          <span class="glyphicon glyphicon-pencil edit"></span>
+          <form action="/edit_user_info" class="editUserInfo" id="emailaddress" method="POST">
+            <input type="text" name="entry" placeholder="%% current_user.emailaddress %%"/>
+            <br/>
+            <input type="submit" value="Apply"/>
+            <span class="glyphicon glyphicon-remove edit"></span>
+            <span class="glyphicon glyphicon-pencil edit"></span>
+          </form>
 
         <h4>Phone</h4>
           <span> %% current_user.phone %% </span>
-          <input type="text" name="phone" value="%% current_user.phone %%"/>
-          <input type="submit" value="Apply"/>
-          <input type="submit" value="Cancel"/>
-          <span class="glyphicon glyphicon-pencil edit"></span>
+          <form action="/edit_user_info" class="editUserInfo" id="phone" method="POST">
+            <input type="text" name="entry" placeholder="%% current_user.phone %%"/>
+            <br/>
+            <input type="submit" value="Apply"/>
+            <span class="glyphicon glyphicon-remove edit"></span>
+            <span class="glyphicon glyphicon-pencil edit"></span>
+          </form>
 
 
     </div>
@@ -92,30 +108,40 @@
   //$(document).ready(function(){
   //});
 		// Attach a submit handler to the form
-		$("#searchForm").submit(function( event ) {
+    
+		$(".editUserInfo").submit(function( event ) {
 			// this uses the .ajax function
 			event.preventDefault();
-			var $form = $(this);
-			term = $form.find("input[name='searchterm']").val();
+			
+      var $form = $(this);
+			entry = $form.find("input[name='entry']").val();
+      //entry = summary;
+      entry_name = $form.attr("id"); //the type of entry being submitted
 			url = $form.attr("action");
-      console.log(term)
-			if (term != ''){ //may want to replace this with regex to handle empty queries
-				$.ajax({
+      
+      data = { entry_name: entry_name, entry : entry}
+      console.log(data)
+      
+			if (entry != ''){ //may want to replace this with regex to handle empty queries
+				/*
+        $.post(url, { entry_name: entry_name, entry : entry}, 
+            function(returnedData){
+                 console.log(returnedData);
+        }).fail(function(){
+              console.log("error");
+        });
+        */
+        $.ajax({
 					url: url,
 					method: 'POST',
-					data: $(this).serialize(),
+					data: data,
 					dataType: 'json',
 					success: function(response) {
-						var content = $(response);
-						var str = JSON.stringify(content, null, 2)
-						console.log(content)
-						var appElement = document.querySelector('[ng-app=myApp]');
-						var $scope = angular.element(appElement).scope();
-						$scope.$apply(function() {
-							$scope.jobs = content;
-						});
+            console.log(response.url)
+						window.location = response.url;
 					},
 					error: function(){
+            console.log('error')
 						$('.resultContainer').html('Oops we have a problem');
 					}
 				});
