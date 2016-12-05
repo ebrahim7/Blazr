@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Blazr - Home</title>
+
+  <link href="https://s3.amazonaws.com/codecademy-content/projects/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:500,300,700,400" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="/public/stylesheets/style.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+
+</head>
+
+<body>
+  <div class="main" ng-controller="MainController" ng-app="myApp">
+
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="#">About</a>
+      <a href="#">Services</a>
+      <a href="#">Clients</a>
+      <a href="#">Contact</a>
+    </div>
+
+    <div id="main">
+      <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+      <img src="/public/images/blazr_orange_text.png" style="float: right;">
+      
+      <h2> My Profile - %% current_user.nickname %%</h2>
+        <form action="/edit_user_info" class="editUserInfo" id="nickname" method="POST">
+          <input type="text" name="entry" placeholder="Edit name" />
+          <input type="submit" value="Submit"/>
+        </form>
+        <p><a href="%% url_for('logout') %%">Logout</a></p>
+      
+      <h3> Summary </h3>
+
+      	<p> %% current_user.summary %% </p>
+      <h3> Experience </h3>
+
+      	<h4> Job Name 1 </h4>
+
+      		<p> I've worked at all the big wig co's and all that snazy nazy stuffs yo. I'm just trying to fill up space blah blah </p>
+
+      	<h4> Job Name 2 </h4>
+
+      		<p> I've ALSO worked at all the big wig co's and all that snazy nazy stuffs yo. I'm just trying to fill up space blah blah </p>
+      
+      <h3> Skills </h3>
+
+      		<p> %% current_user.skills %% </p>
+          
+      <h3> Contact Info </h3>
+        <h4> Email </h4>
+          <p> %% current_user.emailaddress %% </p>
+        
+    </div>
+  </div>
+
+  <script>
+  function openNav() {
+      document.getElementById("mySidenav").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "250px";
+  }
+  function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+      document.getElementById("main").style.marginLeft= "0";
+  }
+  //$(document).ready(function(){
+  //});
+		// Attach a submit handler to the form
+		$(".editUserInfo").submit(function( event ) {
+			// this uses the .ajax function
+			event.preventDefault();
+			
+      var $form = $(this);
+			entry = $form.find("input[name='entry']").val();
+      entry_name = $form.attr("id"); //the type of entry being submitted
+			url = $form.attr("action");
+      
+      data = { entry_name: entry_name, entry : entry}
+      console.log(data)
+      
+			if (entry != ''){ //may want to replace this with regex to handle empty queries
+				/*
+        $.post(url, { entry_name: entry_name, entry : entry}, 
+            function(returnedData){
+                 console.log(returnedData);
+        }).fail(function(){
+              console.log("error");
+        });
+        */
+        $.ajax({
+					url: url,
+					method: 'POST',
+					data: data,
+					dataType: 'json',
+					success: function(response) {
+            console.log(response.url)
+						window.location = response.url;
+					},
+					error: function(){
+            console.log('error')
+						$('.resultContainer').html('Oops we have a problem');
+					}
+				});
+			}
+		});
+	</script>
+
+  <!-- Modules -->
+  <script type="text/javascript" src="/scripts/modules/app.js">
+  </script>
+
+  <!-- Controllers -->
+  <script type="text/javascript" src="/scripts/controllers/MainController.js">
+  </script>
+</body>
+</html>

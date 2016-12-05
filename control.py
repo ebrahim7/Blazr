@@ -1,6 +1,6 @@
 from json import load, dumps
 import requests
-
+from flask_login import current_user
 def login(data):
 	uname = data['uname']
 	password = data['password']
@@ -16,11 +16,11 @@ def create_account(data):
 def get_jobs(jobs_url,term):
     response = requests.get(jobs_url, params={'description': term})
     return response.text
-
+    
 def like_job(data):
 	# store job data in user DB
 	return 'liked'
-
+    
 def app_edit_bio(data):
 	uname = data['uname']
 	bio = data['bio']

@@ -36,10 +36,14 @@ if not engine.dialect.has_table(engine, 'users'):  # If table don't exist, Creat
   metadata = MetaData(engine)
   # Create a table with the appropriate Columns
   Table('users', metadata,
-        Column('id', Integer, primary_key=True, nullable=False), 
-        Column('social_id', String, nullable=False), 
+        Column('id', Integer, primary_key=True, nullable=False),
+        Column('social_id', String, nullable=False),  
+        Column('picture-url', String),
         Column('nickname', String, nullable=False),
         Column('headline', String),
+        Column('summary', String),
+        Column('skills', String),
+        Column('phone', String),
         Column('emailaddress', String, nullable=False))
   # Implement the creation
   metadata.create_all()
@@ -48,14 +52,18 @@ class User(UserMixin, db.Model):
   __tablename__ = 'users'
   id = db.Column(db.Integer, primary_key=True)
   social_id = db.Column(db.String(64), nullable=False, unique=True)
+  picture-url = db.Column(db.String(64), nullable=True)
   nickname = db.Column(db.String(64), nullable=False)
   headline = db.Column(db.String(64), nullable=True)
+  summary = db.Column(db.String(64), nullable=True)
+  skills = db.Column(db.String(64), nullable=True)
+  phone = db.Column(db.String(64), nullable=True)
   emailaddress = db.Column(db.String(64), nullable=False)
 
 @lm.user_loader #This callback is used to reload the user object from the user ID stored in the session. It should take the unicode ID of a user, and return the corresponding user object
 def load_user(id):
   return User.query.get(int(id))
-    
+  
 jinja_options = app.jinja_options.copy()
 jinja_options.update(dict(
   block_start_string='<%',
@@ -86,6 +94,10 @@ def myprofile_route():
 def about_route():
   #return send_from_directory('views','home.html')
   return ''
+  
+@app.route('/login_page')
+def login_page_route():
+  return render_template('login.html')
 
 
 #------ METHODS --------------------------------------------------------------------------------------
@@ -107,17 +119,17 @@ def oauth_callback(provider):
   if not current_user.is_anonymous:
     return redirect(url_for('index'))
   oauth = OAuthSignIn.get_provider(provider)
-  social_id, username, headline, emailaddress = oauth.callback()
+  social_id, username, headline, picture-url, emailaddress = oauth.callback()
   
   if social_id is None:
     flash('Authentication failed.')
     return redirect(url_for('index'))
   user = User.query.filter_by(social_id=social_id).first()
   if not user:
-    user = User(social_id=social_id, nickname=username, headline=headline, emailaddress=emailaddress)
+    user = User(social_id=social_id, nickname=username, headline=headline, picture-url=picture-url, emailaddress=emailaddress)
     db.session.add(user)
     db.session.commit()
-    
+  
   login_user(user, True)
   print('Logged in successfully.')
 
@@ -133,6 +145,34 @@ def oauth_callback(provider):
 def get_jobs_route():
   return get_jobs(jobs_url,request.form['searchterm'])
 
-
-
+@app.route('/edit_user_info', methods=['POST'])
+@login_required
+def edit_user_info():
+  entry_name = request.form['entry_name']
+  entry = request.form['entry']
+  print('Editing entry: {} with {}'.format(entry_name, entry))
+  print('Editing user: {}'.format(current_user))
+  #print('Changing user\'s {} from \"{}\" to \"{}\"'.format(entry, current_user[entry], request.form[entry]))
+  
+  app_edit_entry(entry_name, entry)
+  print(url_for('myprofile_route'))
+  return json.dumps({'status':'OK','url':url_for('myprofile_route')});
+  
+def app_edit_entry(entry_name, entry):
+  if entry_name == 'nickname':
+    current_user.nickname = entry
+    db.session.commit()
+  elif entry_name == 'summary':
+    current_user.summary = entry
+    db.session.commit()
+  elif entry_name == 'skills':
+    current_user.skills = entry
+    db.session.commit()
+  elif entry_name == 'emailaddress':
+    current_user.emailaddress = entry
+    db.session.commit()
+  elif entry_name == 'phone':
+    current_user.phone = entry
+    db.session.commit()
+  
 app.run()
