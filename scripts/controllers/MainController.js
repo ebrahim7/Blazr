@@ -20,7 +20,6 @@ app.controller('MainController', ['$scope', function($scope) {
 	$scope.hide = [];
 	$scope.removeJob = function(index) {
 		$scope.hide[index] = true;
-		console.log("got function");
 	}
 
   console.log('MainController.js loaded')

@@ -1,4 +1,4 @@
-var app = angular.module("myApp", []);
+var app = angular.module("myApp", ['ngAnimate']);
 
 app.filter("trust", ['$sce', function($sce) {
   return function(htmlCode){

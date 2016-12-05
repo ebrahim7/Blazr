@@ -97,8 +97,7 @@ def myprofile_route():
 
 @app.route('/about')
 def about_route():
-  #return send_from_directory('views','home.html')
-  return ''
+  return send_from_directory('views','about.html')
   
 @app.route('/login_page')
 def login_page_route():
